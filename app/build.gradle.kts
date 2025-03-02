@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
+    id("kotlin-parcelize")
+    alias(libs.plugins.hiltAndroid)
 }
 
 android {
@@ -47,11 +50,19 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    kapt {
+        correctErrorTypes = true
+    }
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -66,4 +77,31 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.pull.to.refresh)
+    implementation(libs.bundles.lifecycle)
+    implementation(libs.bundles.pagging)
+    testImplementation(libs.pagging.test)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.hilt)
+    kapt(libs.hilt.compiler)
+    /** endregion core android lib */
+
+    /** region network */
+    implementation(libs.bundles.retrofit)
+    implementation(libs.bundles.okhttp)
+    /** endregion network */
+
+    /** region concurrency */
+    implementation(libs.bundles.rx)
+    /** endregion concurrency */
+
+    /** region tools */
+    implementation(libs.image.loader.coil)
+    implementation(libs.image.loader.coil.svg)
+    implementation(libs.chucker)
+    /** endregion tools */
 }
